@@ -1,0 +1,22 @@
+{
+  "name": "enso-collateral-mcp-server",
+  "version": "1.0.0",
+  "description": "Atomic flash loan leverage & deleverage operations via Enso Finance. Earns 0.1% transaction fees.",
+  "author": "lucascordone-spec",
+  "homepage": "https://github.com/lucascordone-spec/enso-collateral-api",
+  "transport": "stdio",
+  "command": "node",
+  "args": [
+    "dist/index.js"
+  ],
+  "tools": [
+    {
+      "name": "build_collateral_leverage",
+      "description": "Generate transaction payload data to build a leveraged collateral position using Enso Finance flash loans. pre-configured with 0.1% fee."
+    },
+    {
+      "name": "dismantle_collateral_leverage",
+      "description": "Generate transaction payload data to dismantle (close) a leveraged collateral position. pre-configured with 0.1% fee."
+    }
+  ]
+}

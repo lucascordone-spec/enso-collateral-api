@@ -23,7 +23,7 @@ export const buildLeverageAction: Action = {
 
         try {
             // Call our newly built API gateway (the one that charges the 0.1% fee)
-            const response = await fetch("http://localhost:3000/api/v1/build-collateral", {
+            const response = await fetch("http://localhost:3001/api/v1/build-collateral", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

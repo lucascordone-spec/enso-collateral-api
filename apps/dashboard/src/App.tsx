@@ -46,7 +46,7 @@ function App() {
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/v1/metrics');
+        const response = await fetch('http://localhost:3001/api/v1/metrics');
         if (!response.ok) throw new Error('API offline');
         const data = await response.json();
         setMetrics({
@@ -68,7 +68,7 @@ function App() {
   // Ejecutar transacción llamando a la API real
   const runGeneration = async () => {
     if (!isOnline) {
-      alert('Error: La API Gateway no está en línea. Asegúrate de ejecutar el servidor en el puerto 3000.');
+      alert('Error: La API Gateway no está en línea. Asegúrate de ejecutar el servidor en el puerto 3001.');
       return;
     }
     setSimulating(true);
@@ -121,7 +121,7 @@ function App() {
         ...prev
       ]);
 
-      const response = await fetch(`http://localhost:3000/api/v1/${endpoint}`, {
+      const response = await fetch(`http://localhost:3001/api/v1/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bodyParams)

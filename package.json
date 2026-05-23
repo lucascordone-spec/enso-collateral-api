@@ -5,5 +5,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "build:mcp": "npm run build --workspace=@enso-collateral/mcp-server",
+    "start:mcp": "npm run start --workspace=@enso-collateral/mcp-server"
+  }
 }

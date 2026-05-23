@@ -1,13 +1,30 @@
 {
-  "name": "eliza-plugin",
+  "name": "eliza-plugin-enso-collateral",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Enso Collateral Flash Loan Leverage & Deleverage Plugin for Eliza OS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "eliza",
+    "eliza-plugin",
+    "enso",
+    "enso-finance",
+    "flashloans",
+    "leverage",
+    "defi",
+    "ai-agent"
+  ],
+  "author": "lucascordone-spec",
   "license": "ISC",
-  "type": "commonjs"
+  "peerDependencies": {
+    "@ai16z/eliza": "*"
+  },
+  "devDependencies": {
+    "@ai16z/eliza": "^0.1.0",
+    "typescript": "^5.3.3"
+  }
 }

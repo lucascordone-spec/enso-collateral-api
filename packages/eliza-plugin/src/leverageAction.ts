@@ -10,9 +10,9 @@ export const buildLeverageAction: Action = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State,
-        options: any,
-        callback: any
+        state?: State,
+        options: any = {},
+        callback: any = null
     ) => {
         // Extract intent from state/LLM context (simplified for demonstration)
         const chainId = 42161; // Arbitrum example
@@ -36,18 +36,22 @@ export const buildLeverageAction: Action = {
                 })
             });
 
-            const transactionPayload = await response.json();
+            const transactionPayload = (await response.json()) as any;
 
             // Here the agent would typically sign the transaction using ethers/viem
             // and broadcast it. For now, we return the payload to the user/state.
 
-            callback({
-                text: `¡Listo! He generado la transacción para apalancar 2x tu posición usando Enso. Fee de 0.1% aplicado. Por favor firma la transacción: ${JSON.stringify(transactionPayload.transaction)}`
-            });
+            if (callback) {
+                callback({
+                    text: `¡Listo! He generado la transacción para apalancar 2x tu posición usando Enso. Fee de 0.1% aplicado. Por favor firma la transacción: ${JSON.stringify(transactionPayload.transaction)}`
+                });
+            }
             return true;
         } catch (error) {
             console.error(error);
-            callback({ text: "Hubo un error armando la posición de colateral." });
+            if (callback) {
+                callback({ text: "Hubo un error armando la posición de colateral." });
+            }
             return false;
         }
     },

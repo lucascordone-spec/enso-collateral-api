@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { Activity, DollarSign, Users, Zap } from 'lucide-react';
@@ -7,17 +7,48 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 function App() {
   const [metrics, setMetrics] = useState({
-    totalVolume: 1250000,
-    totalFees: 1250,
-    activeAgents: 142
+    totalVolume: 0,
+    totalFees: 0,
+    activeAgents: 0
   });
+  const [isOnline, setIsOnline] = useState(false);
+
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/metrics');
+        if (!response.ok) throw new Error('API offline');
+        const data = await response.json();
+        setMetrics({
+          totalVolume: data.totalVolume,
+          totalFees: data.totalFees,
+          activeAgents: data.activeAgents
+        });
+        setIsOnline(true);
+      } catch (error) {
+        setIsOnline(false);
+      }
+    };
+
+    fetchMetrics();
+    const interval = setInterval(fetchMetrics, 3000); // Polling cada 3 segundos
+    return () => clearInterval(interval);
+  }, []);
 
   const chartData = {
     labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
     datasets: [
       {
         label: 'Volumen Apalancado ($)',
-        data: [150000, 200000, 180000, 250000, 300000, 280000, 400000],
+        data: [
+          metrics.totalVolume * 0.1,
+          metrics.totalVolume * 0.2,
+          metrics.totalVolume * 0.15,
+          metrics.totalVolume * 0.3,
+          metrics.totalVolume * 0.5,
+          metrics.totalVolume * 0.8,
+          metrics.totalVolume // Escala según el volumen real
+        ],
         borderColor: '#00ff41',
         backgroundColor: 'rgba(0, 255, 65, 0.2)',
         tension: 0.4,
@@ -48,9 +79,11 @@ function App() {
             <Zap className="w-8 h-8 animate-pulse" />
             <h1 className="text-2xl font-bold tracking-widest uppercase">Enso Agent Gateway</h1>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-[#00ff41] animate-ping"></span>
-            <span className="text-sm uppercase tracking-wider">Sistema Operativo</span>
+          <div className="flex items-center gap-3">
+            <span className={`w-3 h-3 rounded-full ${isOnline ? 'bg-[#00ff41] animate-ping' : 'bg-red-500 animate-pulse'}`}></span>
+            <span className={`text-sm uppercase tracking-wider ${isOnline ? 'text-[#00ff41]' : 'text-red-500 font-bold'}`}>
+              {isOnline ? 'Sistema Online' : 'Desconectado'}
+            </span>
           </div>
         </div>
       </header>

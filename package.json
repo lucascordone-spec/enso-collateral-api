@@ -10,6 +10,7 @@
     "build:mcp": "npm run build --workspace=@enso-collateral/mcp-server",
     "start:mcp": "npm run start --workspace=@enso-collateral/mcp-server",
     "build:eliza": "npm run build --workspace=eliza-plugin-enso-collateral",
-    "build:all": "npm run build:mcp && npm run build:eliza"
+    "build:dashboard": "npm run build --workspace=dashboard",
+    "build:all": "npm run build:mcp && npm run build:eliza && npm run build:dashboard"
   }
 }

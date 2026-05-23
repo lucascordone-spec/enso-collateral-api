@@ -1,0 +1,17 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      API_GATEWAY_URL:
+        type: string
+        description: "API URL of the running Enso Collateral API gateway (defaults to http://localhost:3001)"
+        default: "http://localhost:3001"
+  commandFunction: |
+    (config) => ({
+      command: 'node',
+      args: ['packages/mcp-server/dist/index.js'],
+      env: {
+        API_GATEWAY_URL: config.API_GATEWAY_URL || 'http://localhost:3001'
+      }
+    })

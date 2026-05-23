@@ -1,4 +1,4 @@
-import { Express, Request, Response } from 'express';
+import type { Express, Request, Response } from 'express';
 import { generateLeverageBundle, generateDeleverageBundle } from './ensoService.js';
 import { getMetrics, addTransactionMetrics } from './metricsService.js';
 
